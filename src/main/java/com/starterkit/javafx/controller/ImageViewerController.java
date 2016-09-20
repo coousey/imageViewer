@@ -7,8 +7,10 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import com.starterkit.javafx.model.ImageViewer;
-import com.starterkit.javafx.model.PersonSearch;
-import com.sun.javafx.logging.Logger;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
@@ -37,28 +39,38 @@ public class ImageViewerController {
 	private void initialize() {
 		
 		
-		 System.out.println(myImageView);
-
 		pathField.textProperty().bindBidirectional(model.pathProperty());
-	
-//	    myImageView.setImage(new Image("src/main/resources/com/starterkit/javafx/img1.jpg"));
-	        
-//		BufferedImage bufferedImage;
-//		try {
-//			File bla = new File("src/main/resources/com/starterkit/javafx/img1.jpg");
-//			System.out.println(bla.getCanonicalPath());
-//			
-//			bufferedImage = ImageIO.read(bla);
-//			Image image = SwingFXUtils.toFXImage(bufferedImage, null);
-//			myImageView.setImage(image);
-//		} catch (IOException e) {
-//
-//			e.printStackTrace();
-//		}
 			
 		File file = new File("src/main/resources/com/starterkit/javafx/img1.jpg");
         Image image = new Image(file.toURI().toString());
         myImageView.setImage(image);
+        
+        
+        try {
+
+			Client client = Client.create();
+			client.addFilter(new HTTPBasicAuthFilter("franek", "pass"));
+
+			WebResource webResource = client
+			   .resource("http://localhost:8090/user/franek");
+
+			ClientResponse response = webResource.accept("application/json")
+	                   .get(ClientResponse.class);
+
+			if (response.getStatus() != 200) {
+			   throw new RuntimeException("Failed : HTTP error code : "
+				+ response.getStatus());
+			}
+
+			String output = response.getEntity(String.class);
+
+			System.out.println(output);
+
+		  } catch (Exception e) {
+
+			e.printStackTrace();
+
+		  }
 		
 		
 	}

@@ -47,6 +47,7 @@ public class Startup extends Application {
 
 		Scene scene = new Scene(root);
 
+
 		/*
 		 * Set the style sheet(s) for application.
 		 */
