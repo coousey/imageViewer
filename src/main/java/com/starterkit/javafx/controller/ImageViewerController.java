@@ -59,6 +59,7 @@ public class ImageViewerController {
 
 	private double xScale;
 	private double yScale;
+	// REV: powinienes zaladowac pliki przez classloadera
 	private String infoImagesPath = "file:///C:\\projects\\starterkit\\todo-jee\\workspacefx\\javafx\\src\\main\\resources\\com\\starterkit\\javafx\\";
 	
 	@FXML
@@ -148,6 +149,7 @@ public class ImageViewerController {
 		stopSlideShow();
 		
 		DirectoryChooser directoryChooser = new DirectoryChooser();
+		// REV: okno powinno byc modalne
 		File file = directoryChooser.showDialog(null);
 		if (file != null && file.isDirectory()) {
 			model.setPath(file.getPath());
@@ -162,6 +164,7 @@ public class ImageViewerController {
 			String extension = "";
 			ArrayList<String> images = new ArrayList<String>();
 
+			// REV: lepiej uzyc filtra
 			for (final File fileEntry : file.listFiles()) {
 
 				int i = fileEntry.getAbsolutePath().lastIndexOf('.');
@@ -230,6 +233,7 @@ public class ImageViewerController {
 	
 	private void stopSlideShow(){
 		if(backgroundThread != null && backgroundThread.isAlive()){
+			// REV: jak to dziala? :-)
 			backgroundThread.interrupt();
 		}
 	}

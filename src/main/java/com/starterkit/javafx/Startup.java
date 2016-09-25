@@ -39,6 +39,7 @@ public class Startup extends Application {
 		 * Load screen from FXML file with specific language bundle (derived
 		 * from default locale).
 		 */
+		// REV: zakomentowany kod
 //		Parent root = FXMLLoader.load(getClass().getResource("/com/starterkit/javafx/view/person-search.fxml"), //
 //				ResourceBundle.getBundle("com/starterkit/javafx/bundle/base"));
 		
